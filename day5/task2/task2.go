@@ -111,13 +111,13 @@ func main() {
 	}
 
 	sort.Sort(BySeatID(seats))
-	fmt.Println("Highest seat in a boarding pass:", highestSeat)
+	fmt.Println("Highest seat in a boarding pass:", highestSeat.ID)
 
 	offset := 78
 	for i := 0; i < len(seats); i++ {
 		if seats[i].ID != i+offset {
-			offset++
-			fmt.Println("Missing seat: ", i, "-", seats[i])
+			fmt.Println("Missing seat: ", seats[i].ID-1)
+			break
 		}
 	}
 }
