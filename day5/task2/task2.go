@@ -42,11 +42,9 @@ func parseColumns(columns string) int {
 	column := 0
 	lo := 0
 	hi := 7
-	var lastPosition byte
 	for i := 0; i < len(columns); i++ {
 		if i == len(columns)-1 {
-			lastPosition = columns[i]
-			if lastPosition == byte('L') {
+			if columns[i] == byte('L') {
 				column = lo
 			} else {
 				column = hi
@@ -67,11 +65,9 @@ func parseRows(rows string) int {
 	row := 0
 	lo := 0
 	hi := 127
-	var lastPosition byte
 	for i := 0; i < len(rows); i++ {
 		if i == len(rows)-1 {
-			lastPosition = rows[i]
-			if lastPosition == byte('F') {
+			if rows[i] == byte('F') {
 				row = lo
 			} else {
 				row = hi
@@ -110,10 +106,15 @@ func main() {
 		seats = append(seats, seat)
 	}
 
-	sort.Sort(BySeatID(seats))
+	if len(seats) == 0 {
+		fmt.Println("Given data has no seats")
+	}
+
 	fmt.Println("Highest seat in a boarding pass:", highestSeat.ID)
 
-	offset := 78
+	sort.Sort(BySeatID(seats))
+
+	offset := seats[0].ID
 	for i := 0; i < len(seats); i++ {
 		if seats[i].ID != i+offset {
 			fmt.Println("Missing seat: ", seats[i].ID-1)
